@@ -37,18 +37,19 @@ export async function registerUser(req,res) {
       }
     });
 
-    const mailOptions = {
+      const mailOptions = {
       from: process.env.GMAIL_USER,
       to: email,
       subject: 'Verify your email',
       html: `
         <p>Hello ${username},</p>
         <p>Click below to verify your email:</p>
-        <a href="https://kind-bite.vercel.app/api/verify-email?token=${verificationToken}">
+        <a href="https://kindbit-backend.onrender.com/api/verify-email?token=${verificationToken}">
           Verify Email
         </a>
       `
     };
+
 
     await transporter.sendMail(mailOptions);
 
