@@ -44,7 +44,7 @@ export async function registerUser(req,res) {
       html: `
         <p>Hello ${username},</p>
         <p>Click below to verify your email:</p>
-        <a href="http://localhost:5000/api/verify-email?token=${verificationToken}">
+        <a href="https://kind-bite.vercel.app/api/verify-email?token=${verificationToken}">
           Verify Email
         </a>
       `
