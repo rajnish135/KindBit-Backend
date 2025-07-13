@@ -21,8 +21,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    // origin: 'https://kind-bite.vercel.app',
-    origin: 'http://localhost:5173', 
+    origin: 'https://kind-bite.vercel.app',
+    // origin: 'http://localhost:5173', 
     methods: ['GET', 'POST'],
     credentials: true
   }
@@ -33,8 +33,8 @@ app.set('io', io);
 
 // ✅ Middleware
 app.use(cors({
-  // origin: 'https://kind-bite.vercel.app',
-  origin: 'http://localhost:5173', 
+  origin: 'https://kind-bite.vercel.app',
+  // origin: 'http://localhost:5173', 
   credentials: true               
 }));
 
