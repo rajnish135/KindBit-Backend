@@ -8,7 +8,7 @@ export async function donorFoodDeleting(req,res){
     const donation = await DonationModel.findOneAndUpdate(
       { _id: donationId, donor: userId },
       { status: 'deleted' },
-      { new: true } // ✅ important
+      { new: true }            //** 
     );
 
     if (!donation) {

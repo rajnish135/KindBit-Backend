@@ -3,7 +3,8 @@ import { UserModel } from "../models/UserModel.js";
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 dotenv.config(); // ✅Load .env variables
-import nodemailer from 'nodemailer';  
+import {transporter} from './utils/emailTransporter.js'
+
 
 export async function registerUser(req,res) {
   
@@ -14,8 +15,9 @@ export async function registerUser(req,res) {
   const { username, password, role, email} = req.body;
   
   const userExists = await UserModel.findOne({ username });
+  const emailExists = await UserModel.findOne({ email });
 
-  if (userExists) 
+  if (userExists || emailExists) 
   return res.status(400).json({ message: 'User already exists' });
   
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,17 +27,10 @@ export async function registerUser(req,res) {
      password: hashedPassword,
      role: role || 'donor',
      verificationToken,
-     email
+     email,
     });
 
   // Send verification email here ✅
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS, // Use Gmail App Password, not your main password
-      }
-    });
 
       const mailOptions = {
       from: process.env.GMAIL_USER,

@@ -5,7 +5,7 @@ export const authMiddleware = async (req, res, next) => {
 
   try {
     
-    // // Try getting token from Authorization header
+    //Try getting token from Authorization header
     const authHeader = req.headers.authorization;
     
     let token = authHeader?.startsWith("Bearer ")
@@ -22,14 +22,18 @@ export const authMiddleware = async (req, res, next) => {
 
     if (!user) 
     return res.status(401).json({ message: 'Invalid token', logout: true });
+
+    if (user.isSuspended) {
+      return res.status(403).json({ message: 'Your account has been suspended. Please contact support.' });
+    }
     
-//Attach full user + decoded userId separately to each request object
+//Attached full user + decoded userId separately to each request object
     req.user = {
         ...user.toObject(),
         userId: decode.userId
      };
 
-    next();                // ✅ proceed to the next middleware or route handler
+    next();                //proceed to the next middleware or route handler
 
   } 
   

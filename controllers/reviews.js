@@ -14,7 +14,6 @@ export async function submitReview(req, res) {
 
     const donorId = donation.donor;
 
-    // ✅ Create the review (no duplicate check now)
     const review = await ReviewModel.create({
       donor: donorId,
       receiver: receiverId,
@@ -23,7 +22,7 @@ export async function submitReview(req, res) {
       comment,
     });
 
-    // ✅ Mark the donation as reviewed
+    //Mark the donation as reviewed
     donation.reviewed = true;
     await donation.save();
 

@@ -10,8 +10,12 @@ export async function login(req, res) {
     if (!user)
         return res.status(400).json({ message: "Invalid credentials" });
 
+    // Check if user is suspended
+    if (user.isSuspended) {
+        return res.status(403).json({ message: 'Your account has been suspended. Please contact support.' });
+    }
     
-    // 🛑 Block login if email is not verified
+    // Block login if email is not verified
     if (!user.isVerified) {
       return res.status(403).json({ message: 'Please verify your email before logging in.' });
     }
@@ -38,7 +42,7 @@ export async function login(req, res) {
   message: 'Login successful',
   token,
   role: user.role,
-  userId: user._id, // ✅ Send userId explicitly
-});
+  userId: user._id, 
+  });
 
 }

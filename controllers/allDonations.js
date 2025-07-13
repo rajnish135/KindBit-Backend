@@ -21,7 +21,10 @@ export async function allDonations(req,res){
 
     }
 
-    donations = await DonationModel.find(query).sort({ createdAt: -1 });
+    donations = await DonationModel.find(query)
+    .populate("receiver", "_id") // Only get _id for comparison
+    .sort({ createdAt: -1 });
+
 
     console.log("Donations",donations);
 

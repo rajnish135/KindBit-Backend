@@ -22,9 +22,8 @@ export async function claimDonation(req, res) {
       return res.status(404).json({ message: 'Donation not found' });
     }
 
-    const io = req.app.get('io'); // ✅ Get Socket.IO instance
+    const io = req.app.get('io'); 
 
-    // ✅ UNCLAIM if already claimed by same user
     if (donation.status === 'claimed' && donation.receiver?.toString() === userId.toString()) {
       
       donation.status = 'available';

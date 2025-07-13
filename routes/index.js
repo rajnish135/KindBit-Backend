@@ -16,6 +16,11 @@ import { verifyEmail } from '../controllers/verifyEmail.js';
 import { markRecieved } from '../controllers/markReceived.js';
 import { deleteSingleFoodItem } from '../controllers/deleteSingleFoodItem.js';
 import { donorFoodDeleting } from '../controllers/donorFoodDeletion.js';
+import { suspendUser } from '../controllers/suspendUser.js';
+import { forgotPassword } from '../controllers/forgotPassword.js';
+import { resetPassword } from '../controllers/resetPassword.js';
+import { getAllNotifications, markAsRead } from '../controllers/notifications.js';
+
 
 export const router = express.Router();
 
@@ -48,5 +53,15 @@ router.get('/verify-email',verifyEmail)
 router.post('/markReceived/:receiverId',authMiddleware,markRecieved);
 
 router.patch('/donations/:id/delete',authMiddleware,donorFoodDeleting);
+
+router.patch('/admin/suspend-user/:userId', authMiddleware,isAdmin, suspendUser);
+
+router.post('/forgot-password', forgotPassword);
+
+router.post('/reset-password', resetPassword);
+
+router.get('/notifications/:userId',getAllNotifications);
+
+router.put('/notifications/mark-read/:userId',markAsRead);
 
 

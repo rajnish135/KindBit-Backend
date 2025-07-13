@@ -20,7 +20,7 @@ export async function markRecieved(req, res) {
 
     await donation.save();
 
-    // ✅ Emit socket event after updating status
+    //Emit socket event after updating status
     const io = req.app.get('io');
     io.emit('donationUpdated', donation); // broadcast updated donation
 

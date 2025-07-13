@@ -3,26 +3,26 @@ import mongoose from 'mongoose';
 const donationSchema = new mongoose.Schema({
 
   donor: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'User',                                
-  required: true
- },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
 
-  name:String ,
+  name: String,
 
   foodDetails: String,
-  
+
   quantity: {
-    type: String, 
+    type: String,
     required: true,
   },
 
-  createdAt: { type: Date, default: Date.now },
-
-  image: { type: String, default: null },
+  image: {
+    type: String,
+    required: true
+  },
 
   location: {
-
     type: {
       type: String,
       enum: ['Point'],
@@ -33,40 +33,39 @@ const donationSchema = new mongoose.Schema({
       type: [Number],
       required: true,
     }
-    
   },
 
   status: {
-  type: String,
-  enum: ['available', 'claimed', 'picked','deleted'],
-  default: 'available',
+    type: String,
+    enum: ['available', 'claimed', 'picked', 'deleted'],
+    default: 'available',
   },
 
   receiver: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'User',
-  default: null,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
   },
 
   claimedAt: {
-  type: Date,
-  default: null,
+    type: Date,
+    default: null,
   },
 
-  donatedAt: {
-  type: Date,
-  default: Date.now,
-},
+  availableTime: {
+    type: String,
+    required: true,
+  },
 
-pickedAt: Date, 
+  pickedAt: Date,
 
-reviewed: {
-  type: Boolean,
-  default: false,
-}
+  reviewed: {
+    type: Boolean,
+    default: false,
+  }
 
-
-
+}, {
+  timestamps: true 
 });
 
 export const DonationModel = mongoose.model('Donation', donationSchema);

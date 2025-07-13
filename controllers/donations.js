@@ -4,7 +4,7 @@ export async function donations(req, res) {
   try {
     const donations = await DonationModel.find({ donor: req.user.userId })
       .populate('receiver', 'username')
-      .populate('donor', 'username email');
+      .populate('donor', 'username');
 
     res.json({ success: true, data: donations });
   } 
