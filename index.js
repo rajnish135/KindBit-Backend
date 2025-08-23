@@ -21,8 +21,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://kind-bite.vercel.app',
-    // origin: 'http://localhost:5173', 
+    // origin: 'https://kind-bite.vercel.app',
+    origin: 'http://localhost:5173', 
     methods: ['GET', 'POST'],
     credentials: true
   }
@@ -33,8 +33,8 @@ app.set('io', io);
 
 // ✅ Middleware
 app.use(cors({
-  origin: 'https://kind-bite.vercel.app',
-  // origin: 'http://localhost:5173', 
+  // origin: 'https://kind-bite.vercel.app',
+  origin: 'http://localhost:5173', 
   credentials: true               
 }));
 
@@ -55,7 +55,7 @@ io.use((socket, next) => {
 
   const token = socket.handshake.auth?.token;
 
-  if (!token) {
+  if(!token) {
     return next(new Error("jwt must be provided"));
   }
 
@@ -67,6 +67,7 @@ io.use((socket, next) => {
   catch (err) {
     return next(new Error("Invalid token: " + err.message));
   }
+  
 });
 
 // ✅ Handle connection AFTER authentication

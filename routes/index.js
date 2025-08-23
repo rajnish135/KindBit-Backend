@@ -20,6 +20,7 @@ import { suspendUser } from '../controllers/suspendUser.js';
 import { forgotPassword } from '../controllers/forgotPassword.js';
 import { resetPassword } from '../controllers/resetPassword.js';
 import { getAllNotifications, markAsRead } from '../controllers/notifications.js';
+import { chatBot } from "../controllers/chatbot.js";
 
 
 export const router = express.Router();
@@ -63,5 +64,7 @@ router.post('/reset-password', resetPassword);
 router.get('/notifications/:userId',getAllNotifications);
 
 router.put('/notifications/mark-read/:userId',markAsRead);
+
+router.post("/chat", authMiddleware, chatBot);
 
 
