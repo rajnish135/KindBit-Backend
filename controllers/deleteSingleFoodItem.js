@@ -11,6 +11,8 @@ export const deleteSingleFoodItem = async (req, res) => {
     if (!donation) {
       return res.status(404).json({ message: 'Donation not found' });
     }
+         
+    req.app.get('io').emit('donationDeleted', foodId);
 
     res.status(200).json({ message: 'Donation deleted successfully' });
   } 

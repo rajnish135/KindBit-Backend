@@ -5,18 +5,13 @@ export const authMiddleware = async (req, res, next) => {
 
   try {
     
-    //Try getting token from Authorization header
+    // Getting token from Authorization header
     const authHeader = req.headers.authorization;
     
-    let token = authHeader?.startsWith("Bearer ")
+    const token = authHeader?.startsWith("Bearer ")
       ? authHeader.split(" ")[1]
       : "";
 
-    // // If not found in header, try from cookies
-    if (!token && req.cookies?.token) {
-        token = req?.cookies?.token;
-    }
-    
     const decode = jwt.verify(token, process.env.JWT_SECRET);
     const user = await UserModel.findById(decode.userId).select('-password');
 
@@ -27,7 +22,7 @@ export const authMiddleware = async (req, res, next) => {
       return res.status(403).json({ message: 'Your account has been suspended. Please contact support.' });
     }
     
-//Attached full user + decoded userId separately to each request object
+//Attached full user as an object + decoded userId separately to each request object
     req.user = {
         ...user.toObject(),
         userId: decode.userId

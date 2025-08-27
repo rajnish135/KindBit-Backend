@@ -12,11 +12,11 @@ export async function runChat(message, history = []) {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const formattedHistory = (history || []).map(m => ({
-    role: m.role,                  // "user" | "model"
-    parts: [{ text: m.content }],  // convert your UI shape → Gemini shape
+    role: m.role,                  
+    parts: [{ text: m.content }],  
   }));
 
- const primer = `
+  const primer = `
 You are KindBite Assistant. KindBite is a food donation platform.
 
 Key Features:
@@ -27,15 +27,17 @@ Key Features:
 - Real-time notifications using Socket.IO.
 - Goal: Reduce food waste and help people in need.
 
-Answer all questions about KindBite clearly and concisely.
-If you don’t know, say so.
+⚠️ Very Important:
+- Only answer questions directly related to KindBite or its features.
+- If a user asks something unrelated (like general knowledge, movies, politics, etc.),
+  reply: "I can only help with KindBite-related questions such as donations, claiming food, reviews, or account help."
+- Stay concise, clear, and professional.
 `;
-
 
   const chat = model.startChat({
     history: [
       { role: "user",  parts: [{ text: primer }] },
-      { role: "model", parts: [{ text: "Understood. I will help with KindBite questions." }] },
+      { role: "model", parts: [{ text: "Understood. I will only answer KindBite-related questions." }] },
       ...formattedHistory,
     ],
   });

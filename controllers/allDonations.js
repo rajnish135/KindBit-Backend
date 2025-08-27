@@ -10,16 +10,18 @@ export async function allDonations(req,res){
 
     let query = {};
 
-    if (role === 'receiver') {
-        
-       query = {
+     if (role === "receiver") {
+      query = {
         $or: [
-          { status: { $in: ['available', 'claimed'] } },
-          { status: 'picked', receiver: userId }
-        ]
+          {
+            status: { $in: ["available", "claimed"] },
+            expiryAt: { $gte: new Date() }   //  exclude stale
+          },
+          { status: "picked", receiver: userId },
+        ],
       };
-
     }
+
 
     donations = await DonationModel.find(query)
     .populate("receiver", "_id") // Only get _id for comparison

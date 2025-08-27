@@ -20,7 +20,7 @@ export async function donorFoodDeleting(req,res){
     .populate('donor', 'username');
 
     // Emit to all clients 
-    req.app.get('io').emit('donationUpdated', populatedDonation);
+    req.app.get('io').emit('donationDeleted', [donation._id]);
 
     res.status(200).json({ message: 'Donation marked as deleted', data: donation });
   } 

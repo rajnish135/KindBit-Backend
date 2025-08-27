@@ -45,11 +45,11 @@ router.get('/reviews/:donorId', getRecieverReviews);
 
 router.get('/admin/donations', authMiddleware, isAdmin, getAllDonationsForAdmin);
 
-router.delete('/admin/deleteStaleDonations',authMiddleware,isAdmin,deleteStaleFood)
+router.delete('/admin/deleteStaleDonations',authMiddleware,isAdmin,deleteStaleFood);
 
-router.delete('/admin/donations/:foodId',authMiddleware,isAdmin,deleteSingleFoodItem)
+router.delete('/admin/donations/:foodId',authMiddleware,isAdmin,deleteSingleFoodItem);
 
-router.get('/verify-email',verifyEmail)
+router.get('/verify-email',verifyEmail);
 
 router.post('/markReceived/:receiverId',authMiddleware,markRecieved);
 

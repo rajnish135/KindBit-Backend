@@ -30,13 +30,6 @@ export async function login(req, res) {
         { userId: user._id, username: user.username, role: user.role },
         process.env.JWT_SECRET
     );
-
-    const cookieOptions = {
-        httpOnly: true,
-    };
-
-    res.cookie('token', token, cookieOptions);
-
    
   res.json({
   message: 'Login successful',
