@@ -4,8 +4,8 @@ import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import http from 'http'; 
-import { Server } from 'socket.io'; 
+import { createServer } from 'http'; 
+import { Server } from 'socket.io';         // ← Socket.IO Server class imported here
 import jwt from 'jsonwebtoken';
 
 dotenv.config();
@@ -16,25 +16,25 @@ import { router } from './routes/index.js';
 const app = express();
 const PORT = 5000;
 
-// Create HTTP server and attach socket.io
-const server = http.createServer(app);
+// Create HTTP server to integrate with Socket.IO
+const server = createServer(app);
 
-const io = new Server(server, {
+const io = new Server(server, {               // ← This is creating Socket.IO server
   cors: {
-    origin: 'https://kind-bite.vercel.app',
-    // origin: 'http://localhost:5173', 
+    // origin: 'https://kind-bite.vercel.app',
+    origin: 'http://localhost:5173', 
     methods: ['GET', 'POST'],
     credentials: true
   }
 });
 
 // Attach io instance globally
-app.set('io', io);
+app.set('io', io); 
 
 // Middleware
 app.use(cors({
-  origin: 'https://kind-bite.vercel.app',
-  // origin: 'http://localhost:5173', 
+  // origin: 'https://kind-bite.vercel.app',
+  origin: 'http://localhost:5173', 
   credentials: true               
 }));
 
