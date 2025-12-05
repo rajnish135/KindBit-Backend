@@ -9,7 +9,11 @@ export async function verifyEmail(req, res)  {
     if (!token) 
     return res.status(400).send('Missing token');
     
-    const user = await UserModel.findOne({ verificationToken: token });
+    const user = await UserModel.findOne({
+      verificationToken: token,
+      verificationTokenExpires: { $gt: Date.now() } 
+    });
+
 
     if (!user) 
     return res.status(400).send('Invalid or expired token');
@@ -17,6 +21,7 @@ export async function verifyEmail(req, res)  {
     // Mark user as verified
     user.isVerified = true;
     user.verificationToken = undefined; 
+    user.verificationTokenExpires = undefined;
     
     await user.save();
 

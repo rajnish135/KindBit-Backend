@@ -12,7 +12,9 @@ const genAI = process.env.GEMINI_API_KEY
 export async function runChat(message, history = []) {
   // 1) Try to answer from FAQ first
   const faqHit = findFaqAnswer(message);
-  if (faqHit) return faqHit;
+  
+  if (faqHit) 
+    return faqHit;
 
   // 2) Check if API key is configured
   if (!genAI || !process.env.GEMINI_API_KEY) {
@@ -52,14 +54,13 @@ Key Features:
 - Stay concise, clear, and professional.
 `;
 
-  // Try each model name until one works
-  let successfulModel = null;
   
   for (const modelName of modelNames) 
   {
     try {
       const model = genAI.getGenerativeModel({ model: modelName });
       
+  //startChat method returns a chat object that maintains context across messages using the provided history.
       const chat = model.startChat({
         history: [
           { role: "user",  parts: [{ text: primer }] },
@@ -75,10 +76,6 @@ Key Features:
         throw new Error("Empty response from Gemini API");
       }
       
-      if (!successfulModel) {
-        successfulModel = modelName;
-        console.log(`✓ Successfully using model: ${modelName}`);
-      }
       
       return responseText;
     } 

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { UserModel } from "../models/UserModel.js";
 import crypto from 'crypto';
 import dotenv from 'dotenv';
-dotenv.config(); // ✅Load .env variables
+dotenv.config(); 
 import {transporter} from './utils/emailTransporter.js'
 
 
@@ -11,6 +11,7 @@ export async function registerUser(req,res) {
   try{
 
   const verificationToken = crypto.randomBytes(32).toString('hex');
+  const verificationTokenExpires = Date.now() + 10 * 60 * 1000;
 
   const { username, password, role, email} = req.body;
   
@@ -27,10 +28,10 @@ export async function registerUser(req,res) {
      password: hashedPassword,
      role: role || 'donor',
      verificationToken,
+    verificationTokenExpires,
      email,
     });
 
-  // Send verification email here ✅
 
       const mailOptions = {
       from: process.env.GMAIL_USER,

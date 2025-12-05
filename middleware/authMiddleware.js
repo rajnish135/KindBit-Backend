@@ -28,7 +28,7 @@ export const authMiddleware = async (req, res, next) => {
         userId: decode.userId
      };
 
-    next();                //proceed to the next middleware or route handler
+    next();              
 
   } 
   

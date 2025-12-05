@@ -26,6 +26,8 @@ const UserSchema = new mongoose.Schema({
     type: String 
   },
 
+  verificationTokenExpires:{ Date},
+
   isSuspended: {
     type: Boolean,
     default: false
