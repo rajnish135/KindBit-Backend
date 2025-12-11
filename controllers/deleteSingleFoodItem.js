@@ -5,7 +5,6 @@ export const deleteSingleFoodItem = async (req, res) => {
   try {
     const { foodId } = req.params;
 
-    // Find donation by ID
     const donation = await DonationModel.findByIdAndDelete(foodId);
 
     if (!donation) {

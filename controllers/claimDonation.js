@@ -24,6 +24,7 @@ export async function claimDonation(req, res) {
 
     const io = req.app.get('io'); 
 
+    // Unclaim if already claimed by the same user
     if (donation.status === 'claimed' && donation.receiver?.toString() === userId.toString()) {
       
       donation.status = 'available';
@@ -32,7 +33,6 @@ export async function claimDonation(req, res) {
       
       await donation.save();
       
-      //FIX
       const updatedDonation = await DonationModel.findById(donation._id)
       .populate('receiver', 'username')
       .populate('donor', 'username');
@@ -46,12 +46,12 @@ export async function claimDonation(req, res) {
       });
     }
 
-    // ✅ Limit check
+    // Limit check
     if (claimsToday >= 3) {
       return res.status(403).json({ message: 'Daily claim limit reached (3/day)' });
     }
 
-    // ✅ Claim if available
+    // Claim if available
     if (donation.status === 'available') {
       donation.status = 'claimed';
       donation.receiver = userId;
@@ -68,19 +68,20 @@ export async function claimDonation(req, res) {
   return res.json({
     message: 'Donation claimed successfully',
     action: 'claimed',
-    donation: updatedDonation // ✅ Also send this back
+    donation: updatedDonation 
   });
 
    
   }
 
-    // ✅ Already claimed by someone else
+    //  Already claimed by someone else
     return res.status(400).json({
       message: 'This donation is already claimed',
       currentStatus: donation.status
     });
 
-  } catch (err) {
+  }
+   catch (err) {
     console.error("Error in toggleClaimDonation:", err);
     return res.status(500).json({
       message: 'Error processing donation claim',

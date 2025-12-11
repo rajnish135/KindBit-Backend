@@ -1,4 +1,3 @@
-// backend/config/faqHelper.js
 import { faqData } from "./faqData.js";
 
 // Combine all FAQs into one array

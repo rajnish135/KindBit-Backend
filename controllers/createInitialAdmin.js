@@ -1,9 +1,8 @@
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import { UserModel } from '../models/UserModel.js'; 
 import { connectDB } from '../config/connectDB.js';
 import dotenv from 'dotenv';
-dotenv.config(); //Load .env variables
+dotenv.config(); 
 
 async function createInitialAdmin() {
   try {

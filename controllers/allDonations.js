@@ -27,7 +27,6 @@ export async function allDonations(req,res){
     .populate("receiver", "_id") // Only get _id for comparison
     .sort({ createdAt: -1 });
 
-
     console.log("Donations",donations);
 
     return res.json({donations});

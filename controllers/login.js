@@ -23,7 +23,6 @@ export async function login(req, res) {
     if (!isMatch)
         return res.status(400).json({ message: "Invalid credentials" });
 
-    // Include role in JWT payload
     const token = jwt.sign(
         { userId: user._id, username: user.username, role: user.role },
         process.env.JWT_SECRET

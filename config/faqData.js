@@ -1,6 +1,10 @@
 export const faqData = {
   admin: [
     {
+      question: "Hi or Hello",
+      answer: "Hello! How can I assist you with KindBite admin features today?",
+    },
+    {
       question: "How do I know if a food item might be stale?",
       answer:
         "The system automatically flags older donations with a 'Might be stale' tag and a red dot. Admins can delete such items if not claimed within a safe window.",
@@ -33,6 +37,10 @@ export const faqData = {
   ],
   donor: [
     {
+      question: "Hi or Hello",
+      answer: "Hello! How can I assist you with KindBite donor features today?",
+    },
+    {
       question: "How can I donate food?",
       answer:
         "Log in and go to the 'Donate' section, fill out the form with food details, upload a photo, and submit. Your donation will be listed as 'available' for nearby receivers.",
@@ -64,6 +72,9 @@ export const faqData = {
     },
   ],
   receiver: [
+    {      question: "Hi or Hello",
+      answer: "Hello! How can I assist you with KindBite receiver features today?",
+    },
     {
       question: "How do I claim a food donation?",
       answer:
